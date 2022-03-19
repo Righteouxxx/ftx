@@ -350,3 +350,4 @@ class FtxClient:
 
     def get_latency_stats(self, days: int = 1, subaccount_nickname: str = None) -> Dict:
         return self._get('stats/latency_stats', {'days': days, 'subaccount_nickname': subaccount_nickname})
+import time import hmac from requests import Request ts = int(time.time() * 1000) request = Request('GET', '<api_endpoint>') prepared = request.prepare() signature_payload = f'{ts}{prepared.method}{prepared.path_url}'.encode() signature = hmac.new('YOUR_API_SECRET'.encode(), signature_payload, 'sha256').hexdigest() prepared.headers[f'FTXUS-KEY'] = 'YOUR_API_KEY' prepared.headers[f'FTXUS-SIGN'] = signature prepared.headers[f'FTXUS-TS'] = str(ts) # Only include line if you want to access a subaccount. Remember to URI-encode the subaccount name if it contains special characters! # prepared.headers[f'FTXUS-SUBACCOUNT'] = google'
